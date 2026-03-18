@@ -1,0 +1,49 @@
+
+pipeline {
+    agent any
+
+    stages {
+        stage ('PULL'){
+            steps{
+                git branch: 'main', url: 'https://github.com/Vickybarai/jenkins-tf.git'
+            }
+        }
+        stage ('PLAN'){
+            steps{
+                sh '''
+                terraform init
+                terraform plan 
+                '''
+            }
+        }
+        stage ('Approval'){
+            steps{
+                script {
+                    timeout(time: 10, unit: 'MINUTES') {
+                        input message: 'Do you want to apply Terraform?', ok: 'Proceed'
+                    }
+                }
+            }
+        }
+        stage ('Deploy'){
+            steps {
+                script{
+                    try{
+                        sh '''
+                            cd ec2 
+                            terraform apply -auto-approve
+                        '''
+                    }catch(err){
+                        echo "error occur"
+
+                        sh '''
+                        cd ec2
+                            terraform init
+                            terraform apply -auto-approve
+                        '''
+                }
+            }
+        }
+        }
+    }
+}
