@@ -3,7 +3,6 @@ terraform {
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = "~> 5.0"
     }
   }
 }
@@ -26,9 +25,10 @@ data "aws_subnets" "default" {
 
 module "my_eks_cluster" {
   source = "./modules/eks" 
-  cluster_name  = "my-production-cluster"
+  cluster_name  = "my-production-cluster2"
   vpc_id        = data.aws_vpc.default.id
   subnet_ids    = data.aws_subnets.default.ids
   instance_type = "t3.small"
   cluster_version = "1.29"
+  
 }
