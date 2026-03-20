@@ -29,14 +29,14 @@ pipeline {
                 script{
                     try{
                         sh '''
-                            cd ec2 
+                    
                             terraform apply -auto-approve
                         '''
                     }catch(err){
                         echo "error occur"
 
                         sh '''
-                        cd ec2
+                   
                             terraform init
                             terraform apply -auto-approve
                         '''
