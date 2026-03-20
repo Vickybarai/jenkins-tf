@@ -5,7 +5,6 @@ provider "aws" {
 
 module "jenkins" {
   source = "./TF-jenkin_ec2"
-
   instance_name = "instance"
   environment_name = "jenkins"
   ami_value = "ami-0938a60d87953e820"
