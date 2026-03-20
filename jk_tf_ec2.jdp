@@ -1,6 +1,5 @@
 pipeline {
     agent any
-
     stages {
         stage ('PULL'){
             steps{
@@ -21,6 +20,7 @@ pipeline {
                     timeout(time: 10, unit: 'MINUTES') {
                         input message: 'Do you want to apply Terraform?', ok: 'Proceed'
                     }
+                    
                 }
             }
         }

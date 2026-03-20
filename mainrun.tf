@@ -4,7 +4,7 @@ provider "aws" {
 }
 
 module "jenkins" {
-  source = "./TF-jenkin_install"
+  source = "./TF-jenkin_ec2"
 
   instance_name = "instance"
   environment_name = "jenkins"
@@ -20,8 +20,8 @@ module "jenkins" {
 
 
 EOF
-
 }
+
 output "jenkins_public_ip" {
   value = module.jenkins.public_ip
 }
