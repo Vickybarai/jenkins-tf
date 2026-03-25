@@ -1,0 +1,33 @@
+pipeline {
+    agent any
+    stages{
+        stage('PULL'){
+            steps{
+                git branch: 'main', url: 'https://github.com/Vickybarai/jenkins-tf.git'
+            }
+        }
+        stage('PLAN'){
+            steps{
+                sh'''
+                cd infra
+                terraform init
+                terraform plan --var-file=vars/staging.tfvars
+                '''
+            }
+        }
+        stage('APPROVAL'){
+            steps{
+                input 'Wait for approval'
+            }
+        }
+        stage('APPLY'){
+            steps{
+                sh'''
+                cd infra
+                terraform init
+                terraform apply -auto-approve --var-file=vars/staging.tfvars
+                '''
+            }
+        }
+    }
+}

@@ -108,5 +108,4 @@ resource "aws_eks_node_group" "my-cluster" {
   tags = {
     Name = "${var.cluster_name}-node-group"
   }
-
 }

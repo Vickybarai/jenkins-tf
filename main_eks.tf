@@ -25,10 +25,10 @@ data "aws_subnets" "default" {
 
 module "my_eks_cluster" {
   source = "./modules/eks" 
-  cluster_name  = "my-production-cluster2"
+  cluster_name  = "my-production-cluster-jk-tf"
   vpc_id        = data.aws_vpc.default.id
   subnet_ids    = data.aws_subnets.default.ids
   instance_type = "t3.small"
-  cluster_version = "1.29"
+  cluster_version = "1.35"
   
 }
