@@ -48,4 +48,6 @@ This repository contains Terraform configurations for a three-tier infrastructur
 - The .tfvars files contain sensitive information and should not be committed to version control
 - Use a secrets management solution for production environments
 - Consider using environment variables for sensitive values
-- Review and adjust security group rules before deploying to production
+- Review and adjust security group rules before deploying to production 
+===
+
