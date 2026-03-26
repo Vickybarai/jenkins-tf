@@ -1,8 +1,4 @@
-Here is the complete, step-by-step master guide. It integrates the **EKS Infrastructure**, the **Jenkins Server Setup**, and the **3 Specific Pipelines** you provided (Infra, Backend, Frontend) while applying the best practices (IAM Roles, Docker permissions) discussed by your instructor.
-
----
-
-# 🚀 Ultimate Guide: EKS Infrastructure & CI/CD Deployment
+# EKS Infrastructure & CI/CD Deployment
 
 ## 📋 Architecture Overview
 We are setting up a decoupled CI/CD workflow:
@@ -121,6 +117,20 @@ aws sts get-caller-identity
 *Expected Output:* An ARN containing `assumed-role/Jenkins-Server-Role/...`. If you see a User ARN, your Instance Profile isn't attached correctly.
 
 ---
+
+Next you go to **Manage Jenkins -> Plugins**, search for and install these specific ones to cover your entire architecture:
+
+1.  **Git Plugin** (Mandatory)
+2.  **Pipeline** (Mandatory)
+3.  **Maven Integration** (Mandatory)
+4.  **Docker Pipeline** (Mandatory)
+5.  **Workspace Cleanup Plugin** (Mandatory - for `cleanWs()`)
+6.  **Credentials Binding Plugin** (**CRITICAL** - for secrets)
+7.  **GitHub Plugin** (Recommended - for Webhooks)
+
+
+
+
 
 ## Phase 4: Pipeline 1 - Infrastructure (Terraform)
 
