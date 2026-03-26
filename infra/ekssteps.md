@@ -91,6 +91,16 @@ sudo systemctl enable jenkins
 2.  Get Password: `sudo cat /var/lib/jenkins/secrets/initialAdminPassword`.
 3.  Install **Suggested Plugins**.
 
+Next you go to **Manage Jenkins -> Plugins**, search for and install these specific ones to cover your entire architecture:
+
+1.  **Git Plugin** (Mandatory)
+2.  **Pipeline** (Mandatory)
+3.  **Maven Integration** (Mandatory)
+4.  **Docker Pipeline** (Mandatory)
+5.  **Workspace Cleanup Plugin** (Mandatory - for `cleanWs()`)
+6.  **Credentials Binding Plugin** (**CRITICAL** - for secrets)
+7.  **GitHub Plugin** (Recommended - for Webhooks)
+
 ---
 
 ## Phase 3: Fix Permissions (The "Sir's" Fix)
@@ -118,20 +128,31 @@ aws sts get-caller-identity
 
 ---
 
-Next you go to **Manage Jenkins -> Plugins**, search for and install these specific ones to cover your entire architecture:
+###  Create the S3 Bucket Manually
 
-1.  **Git Plugin** (Mandatory)
-2.  **Pipeline** (Mandatory)
-3.  **Maven Integration** (Mandatory)
-4.  **Docker Pipeline** (Mandatory)
-5.  **Workspace Cleanup Plugin** (Mandatory - for `cleanWs()`)
-6.  **Credentials Binding Plugin** (**CRITICAL** - for secrets)
-7.  **GitHub Plugin** (Recommended - for Webhooks)
+You need to create this specific bucket manually in AWS Console first.
+
+#### Step 1: Go to AWS Console
+1.  Log in to AWS.
+2.  Search for **S3** in the top search bar.
+3.  Click **Create bucket**.
+
+#### Step 2: Configure the Bucket
+1.  **Bucket name:** You must type the **exact** name from the error:
+    `my-terraform-state-bucket-jk-tf-user-vicky`
+2.  **Region:** Select `us-east-1` (or whatever region you are using for your Jenkins server).
+3.  **Block Public Access settings:** Keep **"Block all public access"** enabled (Security best practice for state files).
+
+#### Step 3: (Important) Enable Versioning
+1.  Scroll down to **Bucket Versioning**.
+2.  Click **Enable**.
+    *   *Why?* This allows you to recover previous versions of your state file if someone accidentally deletes a resource.
+
+#### Step 4: Create
+Click **Create bucket** at the bottom.
 
 
-
-
-
+---
 ## Phase 4: Pipeline 1 - Infrastructure (Terraform)
 
 This pipeline builds the foundation (VPC, EKS Cluster, RDS, S3).
